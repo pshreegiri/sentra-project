@@ -43,10 +43,15 @@ const incidentSchema = new mongoose.Schema(
       default: false,
     },
 
+    // 🔐 JWT-based reporting user
     reportedBy: {
-      name: String,
-      email: String,
-      role: String,
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      role: {
+        type: String,
+      },
     },
 
     status: {

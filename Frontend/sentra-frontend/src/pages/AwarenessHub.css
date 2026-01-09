@@ -1,0 +1,100 @@
+.awareness {
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.awareness-header {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.awareness-header h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+/* Sections */
+.section {
+  padding: 50px 40px;
+}
+
+.section h2 {
+  color: #1e3a8a;
+  margin-bottom: 15px;
+}
+
+.section ul {
+  list-style: disc;
+  padding-left: 20px;
+  font-size: 16px;
+}
+
+.section li {
+  margin-bottom: 8px;
+}
+
+/* Light Background */
+.light {
+  background-color: #f1f5f9;
+}
+
+/* Helpline */
+.helplines p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.policy-row {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px;
+  align-items: center;
+}
+
+.policy-row.reverse {
+  flex-direction: row-reverse;
+}
+
+/* Fixed image size */
+.policy-image {
+  width: 35%;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.policy-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text */
+.policy-content {
+  width: 65%;
+}
+
+.policy-content h3 {
+  color: #1e3a8a;
+  margin-bottom: 10px;
+}
+
+.policy-content ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .policy-row,
+  .policy-row.reverse {
+    flex-direction: column;
+  }
+
+  .policy-image,
+  .policy-content {
+    width: 100%;
+  }
+}

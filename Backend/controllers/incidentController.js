@@ -1,9 +1,14 @@
 const Incident = require("../models/Incident");
 const generateReferenceId = require("../utils/generateReferenceId");
 
-// ================= CREATE INCIDENT =================
+// ================= CREATE INCIDENT (STUDENT) =================
 exports.createIncident = async (req, res) => {
   try {
+    // 🔐 Ensure JWT middleware ran
+    if (!req.user || !req.user.userId) {
+      return res.status(401).json({ message: "Unauthorized request" });
+    }
+
     const {
       incidentType,
       description,
@@ -12,7 +17,6 @@ exports.createIncident = async (req, res) => {
       accusedName,
       accusedDetails,
       isAnonymous,
-      user,
     } = req.body;
 
     if (!incidentType || !description || !location || !dateTime) {
@@ -21,7 +25,7 @@ exports.createIncident = async (req, res) => {
 
     const referenceId = generateReferenceId();
 
-    const incident = new Incident({
+    const incident = await Incident.create({
       referenceId,
       incidentType,
       description,
@@ -30,17 +34,13 @@ exports.createIncident = async (req, res) => {
       accusedName,
       accusedDetails,
       isAnonymous,
-      reportedBy:
-        isAnonymous || !user
-          ? null
-          : {
-              name: user.name,
-              email: user.email,
-              role: user.role,
-            },
+      reportedBy: isAnonymous
+        ? null
+        : {
+            userId: req.user.userId,
+            role: req.user.role,
+          },
     });
-
-    await incident.save();
 
     res.status(201).json({
       message: "Incident submitted successfully",
@@ -52,13 +52,31 @@ exports.createIncident = async (req, res) => {
   }
 };
 
-// ================= GET ALL INCIDENTS =================
+// ================= GET STUDENT'S OWN INCIDENTS =================
+exports.getMyIncidents = async (req, res) => {
+  try {
+    if (!req.user || !req.user.userId) {
+      return res.status(401).json({ message: "Unauthorized request" });
+    }
+
+    const incidents = await Incident.find({
+      "reportedBy.userId": req.user.userId,
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json(incidents);
+  } catch (error) {
+    console.error("FETCH MY INCIDENTS ERROR:", error);
+    res.status(500).json({ message: "Failed to fetch your incidents" });
+  }
+};
+
+// ================= GET ALL INCIDENTS (STAFF / ADMIN) =================
 exports.getAllIncidents = async (req, res) => {
   try {
     const incidents = await Incident.find().sort({ createdAt: -1 });
     res.status(200).json(incidents);
   } catch (error) {
-    console.error("FETCH ERROR:", error);
+    console.error("FETCH ALL INCIDENTS ERROR:", error);
     res.status(500).json({ message: "Failed to fetch incidents" });
   }
 };

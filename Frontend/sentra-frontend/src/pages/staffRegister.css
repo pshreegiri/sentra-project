@@ -1,42 +1,48 @@
-
 .auth-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, #1e40af, #2563eb); /* match student */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   font-family: "Segoe UI", sans-serif;
 }
-.error {
-  color: red;
-  font-size: 12px;
-  margin: 4px 0 8px 0;
-  display: block;
-}
-    
 
+/* ---------- CARD ---------- */
 .auth-box {
   background: #ffffff;
   width: 100%;
-  max-width: 430px;
-  padding: 36px 32px;
+  max-width: 440px;
+  padding: 35px 30px;
   border-radius: 16px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
   animation: slideUp 0.6s ease;
 }
 
+/* ---------- TEXT ---------- */
 .auth-box h2 {
   text-align: center;
-  margin-bottom: 12px;
-  color: #0f172a;
+  margin-bottom: 8px;
+  color: #1e293b;
 }
 
+.auth-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 25px;
+}
 
-.auth-box input {
-  width: 90%;
+/* ---------- INPUTS ---------- */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.input-group input {
+  width: 100%;
   padding: 12px 14px;
-  margin-top: 14px;
   font-size: 15px;
   border-radius: 8px;
   border: 1.5px solid #cbd5e1;
@@ -44,18 +50,27 @@
   transition: all 0.3s ease;
 }
 
-.auth-box input:focus {
-  border-color: #1e40af;
-  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+.input-group input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-.auth-box input::placeholder {
+.input-group input::placeholder {
   color: #94a3b8;
 }
 
-.auth-box button[type="submit"] {
+/* ---------- ERRORS ---------- */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ---------- BUTTON ---------- */
+.auth-btn {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 22px;
   padding: 12px;
   font-size: 16px;
   font-weight: 600;
@@ -67,12 +82,30 @@
   transition: all 0.3s ease;
 }
 
-.auth-box button[type="submit"]:hover {
+.auth-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
 }
 
+/* ---------- FOOTER ---------- */
+.auth-footer-text {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #64748b;
+  text-align: center;
+}
 
+.auth-footer-text span {
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.auth-footer-text span:hover {
+  text-decoration: underline;
+}
+
+/* ---------- ANIMATION ---------- */
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -84,9 +117,10 @@
   }
 }
 
-
+/* ---------- MOBILE ---------- */
 @media (max-width: 480px) {
   .auth-box {
     padding: 28px 22px;
+    max-width: 95%;
   }
 }
