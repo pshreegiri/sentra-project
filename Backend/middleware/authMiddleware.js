@@ -1,13 +1,11 @@
 const jwt = require("jsonwebtoken");
 
-const authMiddleware = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
-    // 🔍 STEP 3 DEBUG
     console.log("AUTH HEADER RECEIVED:", authHeader);
 
-    // Expect: "Bearer <token>"
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({ message: "No token provided" });
     }
@@ -16,10 +14,8 @@ const authMiddleware = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 🔍 STEP 3 DEBUG
     console.log("DECODED JWT:", decoded);
 
-    // attach decoded user info to request
     req.user = decoded; // { userId, role }
 
     next();
@@ -29,4 +25,9 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+// ✅ Export as named export
+module.exports = { verifyToken };
+
+// ✅ If you also need default export for backward compatibility
+// module.exports = verifyToken;
+// module.exports.verifyToken = verifyToken;

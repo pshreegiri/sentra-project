@@ -76,11 +76,52 @@ const incidentSchema = new mongoose.Schema(
     },
 
     // ======================
-    // STATUS
+    // STATUS & PRIORITY
     // ======================
     status: {
       type: String,
       default: "Pending",
+      enum: ["Pending", "In Review", "In Progress", "Closed"],
+    },
+
+    // ✅ NEW: Priority Level
+    priority: {
+      type: String,
+      default: "Medium",
+      enum: ["Low", "Medium", "High", "Critical"],
+    },
+
+    // ✅ NEW: Comments/Notes by Admin
+    comments: [
+      {
+        text: {
+          type: String,
+          required: true,
+        },
+        addedBy: {
+          type: String,
+          default: "Admin",
+        },
+        addedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+
+    // ✅ NEW: Resolution Notes (when closing)
+    resolution: {
+      notes: {
+        type: String,
+        default: "",
+      },
+      resolvedAt: {
+        type: Date,
+      },
+      resolvedBy: {
+        type: String,
+        default: "Admin",
+      },
     },
   },
   { timestamps: true }

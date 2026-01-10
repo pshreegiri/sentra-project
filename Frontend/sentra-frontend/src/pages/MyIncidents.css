@@ -1,83 +1,363 @@
-/* =========================
+/* ==========================================
    INCIDENTS CONTAINER
-========================= */
+   ========================================== */
 .incidents-container {
-  margin-top: 30px;
-  padding: 0 20px;
+  padding: 20px 0;
 }
 
-/* =========================
-   TITLE
-========================= */
 .incidents-title {
-  margin-bottom: 25px;
-  color: #0d6efd;          /* Bootstrap primary blue */
-  font-size: 28px;
+  font-size: 24px;
+  color: #2c3e50;
+  margin-bottom: 20px;
   font-weight: 600;
-  font-family: "Segoe UI", sans-serif;
 }
 
-/* =========================
-   INCIDENT CARD
-========================= */
+.loading-text {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 16px;
+  padding: 40px;
+}
+
+.no-incidents {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 16px;
+  padding: 40px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+/* ==========================================
+   INCIDENT CARDS
+   ========================================== */
 .incident-card {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 12px;
-  background: #ffffff;
-  border-left: 6px solid #0d6efd;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 
 .incident-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
 }
 
-/* =========================
-   INCIDENT REFERENCE
-========================= */
+.incident-card p {
+  margin: 10px 0;
+  color: #34495e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.incident-card strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.incident-card hr {
+  margin: 15px 0;
+  border: none;
+  border-top: 1px solid #ecf0f1;
+}
+
+/* ==========================================
+   INCIDENT HEADER
+   ========================================== */
+.incident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
 .incident-ref {
-  color: #0d6efd;
-  font-weight: 500;
-  text-decoration: underline;
-  cursor: pointer;
+  color: #3498db;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
 }
 
-/* =========================
-   STATUS COLORS
-========================= */
-.incident-status {
-  font-weight: bold;
-  padding: 2px 8px;
+/* ==========================================
+   STATUS BADGES
+   ========================================== */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-badge.pending { 
+  background: #fff3e0; 
+  color: #e65100; 
+}
+
+.status-badge.in-review { 
+  background: #e3f2fd; 
+  color: #1565c0; 
+}
+
+.status-badge.in-progress { 
+  background: #f3e5f5; 
+  color: #6a1b9a; 
+}
+
+.status-badge.closed { 
+  background: #e8f5e9; 
+  color: #2e7d32; 
+}
+
+/* ==========================================
+   ACCUSED SECTION
+   ========================================== */
+.accused-section {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  border-left: 4px solid #3498db;
+}
+
+.accused-section h4 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.accused-section p {
+  margin: 8px 0;
+}
+
+/* ==========================================
+   ANONYMOUS BADGE
+   ========================================== */
+.anonymous-badge {
+  background: #95a5a6;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ==========================================
+   RESOLUTION SECTION
+   ========================================== */
+.resolution-section {
+  background: #e8f5e9;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #4caf50;
+  margin: 15px 0;
+}
+
+.resolution-section h4 {
+  margin: 0 0 10px 0;
+  color: #2e7d32;
+  font-size: 16px;
+}
+
+.resolution-text {
+  color: #2e7d32;
+  line-height: 1.6;
+  margin: 10px 0;
+  font-size: 14px;
+  background: white;
+  padding: 12px;
   border-radius: 6px;
+}
+
+.resolution-date {
+  font-size: 12px;
+  color: #558b2f;
+  font-style: italic;
+  margin: 5px 0;
+}
+
+/* ==========================================
+   VIEW DETAILS BUTTON
+   ========================================== */
+.view-details-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.view-details-btn:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* ==========================================
+   MODAL
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-box {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-box h3 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  color: #2c3e50;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.modal-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  line-height: 1.8;
+}
+
+.modal-content p {
+  margin: 10px 0;
+  color: #34495e;
   font-size: 14px;
 }
 
-.incident-status.pending {
-  color: #856404;
-  background: #fff3cd;
+.modal-content strong {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-right: 8px;
 }
 
-.incident-status.resolved {
-  color: #155724;
-  background: #d4edda;
+.modal-content hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 2px solid #ecf0f1;
 }
 
-.incident-status.in-review {
-  color: #0c5460;
-  background: #d1ecf1;
+.modal-content h4 {
+  margin: 20px 0 12px 0;
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-/* =========================
-   EMPTY & LOADING STATES
-========================= */
-.no-incidents,
-.loading-text {
-  text-align: center;
-  font-style: italic;
-  color: #6c757d;
+.description-text {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+  line-height: 1.6;
+}
+
+.close-btn {
   margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+/* ==========================================
+   SCROLLBAR
+   ========================================== */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #95a5a6;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+@media (max-width: 768px) {
+  .incident-card {
+    padding: 15px;
+  }
+
+  .incidents-title {
+    font-size: 20px;
+  }
+
+  .modal-box {
+    padding: 20px;
+    width: 95%;
+  }
+
+  .incident-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 }

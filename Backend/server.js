@@ -12,10 +12,14 @@ app.use(express.json());
 // Routes
 const incidentRoutes = require("./routes/incidentRoutes");
 const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+const reviewRoutes = require("./routes/reviewRoutes"); // ✅ ADD THIS
 
 // Use routes
 app.use("/api/incidents", incidentRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/reviews", reviewRoutes); // ✅ ADD THIS
 
 // MongoDB connection
 mongoose
@@ -25,7 +29,6 @@ mongoose
     console.log("👉 Connected DB:", mongoose.connection.name);
   })
   .catch((err) => console.log("❌ MongoDB error:", err));
-
 
 // Server start
 const PORT = process.env.PORT || 5000;

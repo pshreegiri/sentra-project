@@ -1,15 +1,60 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../pages/home.css"
 
 export default function Home() {
   const [showRole, setShowRole] = useState(false);
+  const [currentReview, setCurrentReview] = useState(0);
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const toggleDarkMode = () => {
     document.body.classList.toggle("dark");
   };
 
+  // ✅ Fetch ONLY approved reviews from backend
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/reviews/approved");
+      console.log("✅ Approved reviews fetched:", response.data.reviews);
+      setReviews(response.data.reviews);
+      setLoading(false);
+    } catch (error) {
+      console.error("❌ Error fetching reviews:", error);
+      setLoading(false);
+    }
+  };
+
+  // Auto-advance carousel every 5 seconds
+  useEffect(() => {
+    if (reviews.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentReview((prev) => (prev + 1) % reviews.length);
+      }, 5000);
+
+      return () => clearInterval(interval);
+    }
+  }, [reviews.length]);
+
+  const nextReview = () => {
+    setCurrentReview((prev) => (prev + 1) % reviews.length);
+  };
+
+  const prevReview = () => {
+    setCurrentReview((prev) => (prev - 1 + reviews.length) % reviews.length);
+  };
+
+  const goToReview = (index) => {
+    setCurrentReview(index);
+  };
+
+  // Reveal animation on scroll
   useEffect(() => {
     const reveals = document.querySelectorAll(".reveal");
 
@@ -43,7 +88,6 @@ export default function Home() {
             Awareness Hub
           </button>
 
-
           <button className="nav-login" onClick={() => navigate("/login")}>
             Login
           </button>
@@ -53,7 +97,7 @@ export default function Home() {
             onClick={toggleDarkMode}
             title="Toggle Dark Mode"
           >
-            
+            🌙
           </button>
         </div>
       </nav>
@@ -78,14 +122,11 @@ export default function Home() {
               Login
             </button>
             <button
-  className="btn primary admin"
-  onClick={() => navigate("/admin-login")}
->
-  Admin Login
-</button>
-
-
-
+              className="btn primary admin"
+              onClick={() => navigate("/admin-login")}
+            >
+              Admin Login
+            </button>
           </div>
         ) : (
           <div className="center-buttons">
@@ -103,7 +144,6 @@ export default function Home() {
               🧑‍🏫 Staff
             </button>
           </div>
-          
         )}
       </main>
 
@@ -132,6 +172,69 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ✅ ONLY APPROVED REVIEWS CAROUSEL */}
+      {loading ? (
+        <section className="reviews-section reveal">
+          <p>Loading reviews...</p>
+        </section>
+      ) : reviews.length > 0 ? (
+        <section className="reviews-section reveal">
+          <h2>What Our Users Say</h2>
+          <p className="reviews-subtitle">
+            Real feedback from students and staff who trust Sentra
+          </p>
+
+          <div className="carousel-container">
+            <button 
+              className="carousel-btn"
+              onClick={prevReview}
+              aria-label="Previous review"
+            >
+              ‹
+            </button>
+
+            <div className="review-card">
+              <div className="review-header">
+                <div className="avatar">
+                  {reviews[currentReview].role === "student" ? "👩‍🎓" : "👨‍🏫"}
+                </div>
+                <div className="review-info">
+                  <h3>{reviews[currentReview].name}</h3>
+                  <p className="review-role">
+                    {reviews[currentReview].role === "student" ? "Student" : "Staff"} • {reviews[currentReview].department}
+                  </p>
+                  <div className="stars">
+                    {[...Array(reviews[currentReview].rating)].map((_, i) => (
+                      <span key={i}>⭐</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p className="review-text">"{reviews[currentReview].review}"</p>
+            </div>
+
+            <button 
+              className="carousel-btn"
+              onClick={nextReview}
+              aria-label="Next review"
+            >
+              ›
+            </button>
+          </div>
+
+          <div className="dots-container">
+            {reviews.map((_, index) => (
+              <button
+                key={index}
+                className={`dot ${index === currentReview ? 'active' : ''}`}
+                onClick={() => goToReview(index)}
+                aria-label={`Go to review ${index + 1}`}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="how-section reveal">
         <h2>How Sentra Works</h2>

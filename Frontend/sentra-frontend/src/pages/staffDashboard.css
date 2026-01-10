@@ -41,7 +41,7 @@
 }
 
 .dashboard-header strong {
-  color: #3498db;
+  color: #9c27b0;
 }
 
 /* Header Actions */
@@ -114,8 +114,8 @@
 }
 
 .nav-btn:hover {
-  border-color: #3498db;
-  color: #3498db;
+  border-color: #9c27b0;
+  color: #9c27b0;
   transform: translateY(-2px);
 }
 

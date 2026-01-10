@@ -1,29 +1,45 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import "../pages/AdminLogin.css"; // keep your CSS
+import axios from "axios";
+import { AdminAuthContext } from "../context/AdminAuthContext";
+import "../pages/AdminLogin.css";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
+  const { login } = useContext(AdminAuthContext);
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    // Only allow the default admin credentials
-    if (email === "admin@sentra.com" && password === "admin123") {
-      setError("");
-      navigate("/admin"); // redirect to admin dashboard
-    } else {
-      setError("Invalid email or password"); // block everything else
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/admin/login",
+        { email, password }
+      );
+
+      login(response.data.token, response.data.user);
+      navigate("/admin");
+      
+    } catch (err) {
+      console.error("Login error:", err);
+      setError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-container">
       <div className="login-wrapper">
-        {/* LEFT INFO PANEL */}
         <div className="login-info">
           <h1>Sentra System</h1>
           <p>
@@ -36,7 +52,6 @@ export default function AdminLogin() {
           </ul>
         </div>
 
-        {/* LOGIN FORM */}
         <form className="login-form" onSubmit={handleLogin}>
           <h2>🔐 Admin Login</h2>
           <p className="auth-subtitle">Enter your admin credentials</p>
@@ -47,6 +62,7 @@ export default function AdminLogin() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={loading}
           />
 
           <input
@@ -55,11 +71,14 @@ export default function AdminLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={loading}
           />
 
           {error && <p className="error">{error}</p>}
 
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
       </div>
     </div>

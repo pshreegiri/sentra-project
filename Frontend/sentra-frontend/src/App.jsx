@@ -10,10 +10,12 @@ import StaffDashboard from "./components/StaffDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import NotFound from "./components/NotFound";
 import AwarenessHub from "./components/AwarenessHub";
-import AdminLogin from "./components/AdminLogin"
+import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./components/AdminDashboard";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 
 import { AuthContext } from "./context/AuthContext";
+import { AdminAuthProvider } from "./context/AdminAuthContext";
 
 function App() {
   const { loading } = useContext(AuthContext);
@@ -24,53 +26,53 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register/student" element={<StudentRegister />} />
-        <Route path="/register/staff" element={<StaffRegister />} />
-        <Route path="/aware" element={<AwarenessHub />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+    <AdminAuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register/student" element={<StudentRegister />} />
+          <Route path="/register/staff" element={<StaffRegister />} />
+          <Route path="/aware" element={<AwarenessHub />} />
+          
+          {/* Admin Login - Public */}
+          <Route path="/admin-login" element={<AdminLogin />} />
 
+          {/* Protected Student/Staff routes */}
+          <Route
+            path="/student"
+            element={
+              <ProtectedRoute role="student">
+                <StudentDashboard />
+              </ProtectedRoute>
+            }
+          />
 
+          <Route
+            path="/staff"
+            element={
+              <ProtectedRoute role="staff">
+                <StaffDashboard />
+              </ProtectedRoute>
+            }
+          />
 
+          {/* Protected Admin route */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedAdminRoute>
+                <AdminDashboard />
+              </ProtectedAdminRoute>
+            }
+          />
 
-        {/* Protected routes */}
-        <Route
-          path="/student"
-          element={
-            <ProtectedRoute role="student">
-              <StudentDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/staff"
-          element={
-            <ProtectedRoute role="staff">
-              <StaffDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-  path="/admin"
-  element={
-    <ProtectedRoute role="admin">
-      <AdminDashboard />
-    </ProtectedRoute>
-  }
-/>
-
-
-        {/* Fallback */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+          {/* Fallback */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </AdminAuthProvider>
   );
 }
 
