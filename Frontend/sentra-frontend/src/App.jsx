@@ -7,10 +7,11 @@ import StudentRegister from "./components/StudentRegister";
 import StaffRegister from "./components/StaffRegister";
 import StudentDashboard from "./components/StudentDashboard";
 import StaffDashboard from "./components/StaffDashboard";
-import AdminDashboard from "./components/AdminDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import NotFound from "./components/NotFound";
 import AwarenessHub from "./components/AwarenessHub";
+import AdminLogin from "./components/AdminLogin"
+import AdminDashboard from "./components/AdminDashboard";
 
 import { AuthContext } from "./context/AuthContext";
 
@@ -31,6 +32,10 @@ function App() {
         <Route path="/register/student" element={<StudentRegister />} />
         <Route path="/register/staff" element={<StaffRegister />} />
         <Route path="/aware" element={<AwarenessHub />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+
+
 
 
         {/* Protected routes */}
@@ -53,13 +58,14 @@ function App() {
         />
 
         <Route
-          path="/admin"
-          element={
-            <ProtectedRoute role="admin">
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+  path="/admin"
+  element={
+    <ProtectedRoute role="admin">
+      <AdminDashboard />
+    </ProtectedRoute>
+  }
+/>
+
 
         {/* Fallback */}
         <Route path="*" element={<NotFound />} />

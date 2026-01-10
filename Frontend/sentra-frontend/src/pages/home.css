@@ -50,6 +50,8 @@ body {
   cursor: pointer;
 }
 
+
+
 .nav-login:hover {
   background: #1e293b;
 }
@@ -167,4 +169,23 @@ body {
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
+}
+/* Admin button style */
+.center-buttons .btn.admin {
+  background: #ff6b6b;       /* nice red color */
+  color: #fff;
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.center-buttons .btn.admin:hover {
+  background: #e55a5a;       /* slightly darker red on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
