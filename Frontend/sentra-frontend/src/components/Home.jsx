@@ -77,6 +77,15 @@ export default function Home() {
             >
               Login
             </button>
+            <button
+  className="btn primary admin"
+  onClick={() => navigate("/admin-login")}
+>
+  Admin Login
+</button>
+
+
+
           </div>
         ) : (
           <div className="center-buttons">
@@ -94,6 +103,7 @@ export default function Home() {
               🧑‍🏫 Staff
             </button>
           </div>
+          
         )}
       </main>
 

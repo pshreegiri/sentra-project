@@ -1,0 +1,155 @@
+/* PAGE */
+.admin-dashboard {
+  padding: 25px;
+  background: #f4f6fb;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* HEADER */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-header h2 {
+  color: #333;
+}
+
+.admin-header button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 10px;
+  background: #4c50ff;
+  color: white;
+  transition: 0.3s;
+}
+
+.admin-header button:hover {
+  background: #3539d1;
+}
+
+.logout-btn {
+  background: #ff4d4d !important;
+}
+
+.logout-btn:hover {
+  background: #d93636 !important;
+}
+
+/* SEARCH */
+.search-box {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+/* TABLE */
+.incident-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.incident-table th {
+  background: #4c50ff;
+  color: white;
+  padding: 12px;
+}
+
+.incident-table td {
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.incident-table tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+/* STATUS DROPDOWN */
+.incident-table select {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: 500;
+}
+
+/* VIEW BUTTON */
+.view-btn {
+  background: #00b894;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.view-btn:hover {
+  background: #019875;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 380px;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-box h3 {
+  margin-bottom: 15px;
+  color: #4c50ff;
+}
+
+.modal-box p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.modal-box button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #4c50ff;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.modal-box button:hover {
+  background: #3539d1;
+}
