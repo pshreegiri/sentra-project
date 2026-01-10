@@ -21,19 +21,19 @@ router.post(
 router.get(
   "/my",
   authMiddleware,
-  roleMiddleware(["student"]),
+  roleMiddleware(["student", "staff"]),
   incidentController.getMyIncidents
 );
 
 // =======================
-// STAFF / ADMIN ROUTES
+// ADMIN ROUTES
 // =======================
 
-// 🔒 Staff/Admin view all incidents
+// 🔒 Admin view all incidents
 router.get(
   "/all",
   authMiddleware,
-  roleMiddleware(["staff", "admin"]),
+  roleMiddleware(["admin"]),
   incidentController.getAllIncidents
 );
 

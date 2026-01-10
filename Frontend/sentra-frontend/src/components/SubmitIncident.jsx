@@ -3,21 +3,20 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
 export default function SubmitIncident() {
-  const { token } = useContext(AuthContext); // 🔐 JWT token
+  const { token } = useContext(AuthContext);
 
-  const [type, setType] = useState("");
+  const [incidentType, setIncidentType] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [dateTime, setDateTime] = useState("");
-  const [file, setFile] = useState(null);
 
-  // Accused details
+  // ✅ Accused details (REQUIRED)
   const [accusedName, setAccusedName] = useState("");
   const [accusedRole, setAccusedRole] = useState("");
   const [accusedDept, setAccusedDept] = useState("");
   const [relationship, setRelationship] = useState("");
 
-  // Anonymous + reference ID
+  // Reporter anonymity
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [referenceId, setReferenceId] = useState("");
 
@@ -28,18 +27,20 @@ export default function SubmitIncident() {
       const response = await axios.post(
         "http://localhost:5000/api/incidents",
         {
-          incidentType: type,
+          incidentType,
           description,
           location,
           dateTime,
-
           accusedName,
-          accusedDetails: `${accusedRole} | ${accusedDept} | ${relationship}`, // 👈 combined safely
+          accusedRole,
+          accusedDept,
+          relationship,
           isAnonymous,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // 🔥 JWT SENT HERE
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
@@ -47,11 +48,10 @@ export default function SubmitIncident() {
       setReferenceId(response.data.referenceId);
 
       // reset form
-      setType("");
+      setIncidentType("");
       setDescription("");
       setLocation("");
       setDateTime("");
-      setFile(null);
       setAccusedName("");
       setAccusedRole("");
       setAccusedDept("");
@@ -68,11 +68,10 @@ export default function SubmitIncident() {
       <form onSubmit={handleSubmit} style={{ maxWidth: "500px" }}>
         <h3>Submit Incident</h3>
 
-        {/* Incident Type */}
         <label>Incident Type</label>
         <select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
+          value={incidentType}
+          onChange={(e) => setIncidentType(e.target.value)}
           required
           style={{ width: "100%", marginBottom: "10px" }}
         >
@@ -84,7 +83,6 @@ export default function SubmitIncident() {
           <option value="Other">Other</option>
         </select>
 
-        {/* Description */}
         <label>Description</label>
         <textarea
           rows="4"
@@ -94,7 +92,6 @@ export default function SubmitIncident() {
           style={{ width: "100%", marginBottom: "10px" }}
         />
 
-        {/* Location */}
         <label>Location</label>
         <input
           type="text"
@@ -104,7 +101,6 @@ export default function SubmitIncident() {
           style={{ width: "100%", marginBottom: "10px" }}
         />
 
-        {/* Date & Time */}
         <label>Date & Time</label>
         <input
           type="datetime-local"
@@ -116,7 +112,6 @@ export default function SubmitIncident() {
 
         <hr />
 
-        {/* Accused Details */}
         <h4>Accused Person Details</h4>
 
         <label>Name of Accused</label>
@@ -141,12 +136,11 @@ export default function SubmitIncident() {
           <option value="Unknown">Unknown</option>
         </select>
 
-        <label>Department / Year</label>
+        <label>Department</label>
         <input
           type="text"
           value={accusedDept}
           onChange={(e) => setAccusedDept(e.target.value)}
-          required
           style={{ width: "100%", marginBottom: "10px" }}
         />
 
@@ -159,14 +153,6 @@ export default function SubmitIncident() {
           style={{ width: "100%", marginBottom: "10px" }}
         />
 
-        <label>Attach File (optional)</label>
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          style={{ marginBottom: "15px" }}
-        />
-
-        {/* Anonymous */}
         <label style={{ display: "block", marginBottom: "15px" }}>
           <input
             type="checkbox"
@@ -191,7 +177,7 @@ export default function SubmitIncident() {
           <p>
             <strong>Reference ID:</strong> {referenceId}
           </p>
-          <p>Please save this ID for tracking your incident later.</p>
+          <p>Please save this ID for tracking your incident.</p>
         </div>
       )}
     </div>

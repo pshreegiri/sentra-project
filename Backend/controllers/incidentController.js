@@ -1,7 +1,7 @@
 const Incident = require("../models/Incident");
 const generateReferenceId = require("../utils/generateReferenceId");
 
-// ================= CREATE INCIDENT (STUDENT) =================
+// ================= CREATE INCIDENT (STUDENT / STAFF) =================
 exports.createIncident = async (req, res) => {
   try {
     // 🔐 Ensure JWT middleware ran
@@ -15,11 +15,23 @@ exports.createIncident = async (req, res) => {
       location,
       dateTime,
       accusedName,
-      accusedDetails,
+      accusedRole,
+      accusedDept,
+      relationship,
       isAnonymous,
     } = req.body;
 
-    if (!incidentType || !description || !location || !dateTime) {
+    // -----------------------
+    // VALIDATION
+    // -----------------------
+    if (
+      !incidentType ||
+      !description ||
+      !location ||
+      !dateTime ||
+      !accusedName ||
+      !accusedRole
+    ) {
       return res.status(400).json({ message: "Required fields missing" });
     }
 
@@ -31,15 +43,23 @@ exports.createIncident = async (req, res) => {
       description,
       location,
       dateTime: new Date(dateTime),
-      accusedName,
-      accusedDetails,
+
+      // ✅ ACCUSED (never anonymous)
+      accused: {
+        name: accusedName,
+        role: accusedRole,
+        department: accusedDept || "",
+        relationship: relationship || "",
+      },
+
+      // 🔐 Reporter anonymity flag
       isAnonymous,
-      reportedBy: isAnonymous
-        ? null
-        : {
-            userId: req.user.userId,
-            role: req.user.role,
-          },
+
+      // 🔐 Always store reporter internally
+      reportedBy: {
+        userId: req.user.userId,
+        role: req.user.role,
+      },
     });
 
     res.status(201).json({
@@ -47,12 +67,12 @@ exports.createIncident = async (req, res) => {
       referenceId,
     });
   } catch (error) {
-    console.error("INCIDENT ERROR:", error);
+    console.error("❌ INCIDENT ERROR:", error);
     res.status(500).json({ message: "Error submitting incident" });
   }
 };
 
-// ================= GET STUDENT'S OWN INCIDENTS =================
+// ================= GET MY INCIDENTS (STUDENT / STAFF) =================
 exports.getMyIncidents = async (req, res) => {
   try {
     if (!req.user || !req.user.userId) {
@@ -65,18 +85,30 @@ exports.getMyIncidents = async (req, res) => {
 
     res.status(200).json(incidents);
   } catch (error) {
-    console.error("FETCH MY INCIDENTS ERROR:", error);
+    console.error("❌ FETCH MY INCIDENTS ERROR:", error);
     res.status(500).json({ message: "Failed to fetch your incidents" });
   }
 };
 
-// ================= GET ALL INCIDENTS (STAFF / ADMIN) =================
+// ================= GET ALL INCIDENTS (ADMIN ONLY) =================
 exports.getAllIncidents = async (req, res) => {
   try {
     const incidents = await Incident.find().sort({ createdAt: -1 });
-    res.status(200).json(incidents);
+
+    // 🔐 Hide reporter identity for anonymous reports
+    const sanitizedIncidents = incidents.map((incident) => {
+      const obj = incident.toObject();
+
+      if (obj.isAnonymous) {
+        obj.reportedBy = null;
+      }
+
+      return obj;
+    });
+
+    res.status(200).json(sanitizedIncidents);
   } catch (error) {
-    console.error("FETCH ALL INCIDENTS ERROR:", error);
+    console.error("❌ FETCH ALL INCIDENTS ERROR:", error);
     res.status(500).json({ message: "Failed to fetch incidents" });
   }
 };

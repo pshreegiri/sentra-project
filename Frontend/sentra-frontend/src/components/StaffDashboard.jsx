@@ -36,7 +36,7 @@ export default function StaffDashboard() {
           className={`nav-btn ${view === "list" ? "active" : ""}`}
           onClick={() => setView("list")}
         >
-          View Incidents
+          My Incidents
         </button>
 
         

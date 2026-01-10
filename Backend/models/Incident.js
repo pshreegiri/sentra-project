@@ -2,12 +2,18 @@ const mongoose = require("mongoose");
 
 const incidentSchema = new mongoose.Schema(
   {
+    // ======================
+    // SYSTEM GENERATED
+    // ======================
     referenceId: {
       type: String,
       required: true,
       unique: true,
     },
 
+    // ======================
+    // INCIDENT DETAILS
+    // ======================
     incidentType: {
       type: String,
       required: true,
@@ -28,16 +34,31 @@ const incidentSchema = new mongoose.Schema(
       required: true,
     },
 
-    accusedName: {
-      type: String,
-      default: "",
+    // ======================
+    // ACCUSED (NEVER ANONYMOUS)
+    // ======================
+    accused: {
+      name: {
+        type: String,
+        required: true,
+      },
+      role: {
+        type: String, // Student / Staff / Unknown
+        required: true,
+      },
+      department: {
+        type: String,
+        default: "",
+      },
+      relationship: {
+        type: String,
+        default: "",
+      },
     },
 
-    accusedDetails: {
-      type: String,
-      default: "",
-    },
-
+    // ======================
+    // REPORTER (CAN BE ANONYMOUS)
+    // ======================
     isAnonymous: {
       type: Boolean,
       default: false,
@@ -54,6 +75,9 @@ const incidentSchema = new mongoose.Schema(
       },
     },
 
+    // ======================
+    // STATUS
+    // ======================
     status: {
       type: String,
       default: "Pending",
