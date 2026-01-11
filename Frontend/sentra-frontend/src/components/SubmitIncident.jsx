@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import "../pages/SubmitIncident.css";
 
 export default function SubmitIncident() {
   const { token } = useContext(AuthContext);
@@ -10,24 +11,22 @@ export default function SubmitIncident() {
   const [location, setLocation] = useState("");
   const [dateTime, setDateTime] = useState("");
 
-  // ✅ Accused details (REQUIRED)
+  // Accused details
   const [accusedName, setAccusedName] = useState("");
   const [accusedRole, setAccusedRole] = useState("");
   const [accusedDept, setAccusedDept] = useState("");
   const [relationship, setRelationship] = useState("");
 
-  // Reporter anonymity
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [referenceId, setReferenceId] = useState("");
 
-  // ✅ NEW: Get current date and time in the format required for datetime-local input
   const getCurrentDateTime = () => {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
@@ -75,16 +74,16 @@ export default function SubmitIncident() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} style={{ maxWidth: "500px" }}>
-        <h3>Submit Incident</h3>
+    <div className="incident-form-wrapper">
+      <form className="incident-form" onSubmit={handleSubmit}>
+        <h3 className="form-title">Submit Incident</h3>
 
-        <label>Incident Type</label>
+        <label className="form-label">Incident Type</label>
         <select
+          className="form-input"
           value={incidentType}
           onChange={(e) => setIncidentType(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: "10px" }}
         >
           <option value="">Select Type</option>
           <option value="Harassment">Harassment</option>
@@ -94,53 +93,52 @@ export default function SubmitIncident() {
           <option value="Other">Other</option>
         </select>
 
-        <label>Description</label>
+        <label className="form-label">Description</label>
         <textarea
-          rows="4"
+          className="form-input textarea"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: "10px" }}
         />
 
-        <label>Location</label>
+        <label className="form-label">Location</label>
         <input
+          className="form-input"
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: "10px" }}
         />
 
-        <label>Date & Time</label>
+        <label className="form-label">Date & Time</label>
         <input
-            type="datetime-local"
-            value={dateTime}
-            onChange={(e) => setDateTime(e.target.value)}
-            max={getCurrentDateTime()}
-            required
-            style={{ width: "100%", marginBottom: "10px" }}
+          className="form-input"
+          type="datetime-local"
+          value={dateTime}
+          onChange={(e) => setDateTime(e.target.value)}
+          max={getCurrentDateTime()}
+          required
         />
 
-        <hr />
+        <hr className="form-divider" />
 
-        <h4>Accused Person Details</h4>
+        <h4 className="sub-title">Accused Person Details</h4>
 
-        <label>Name of Accused</label>
+        <label className="form-label">Name of Accused</label>
         <input
+          className="form-input"
           type="text"
           value={accusedName}
           onChange={(e) => setAccusedName(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: "10px" }}
         />
 
-        <label>Role</label>
+        <label className="form-label">Role</label>
         <select
+          className="form-input"
           value={accusedRole}
           onChange={(e) => setAccusedRole(e.target.value)}
           required
-          style={{ width: "100%", marginBottom: "10px" }}
         >
           <option value="">Select</option>
           <option value="Student">Student</option>
@@ -148,43 +146,39 @@ export default function SubmitIncident() {
           <option value="Unknown">Unknown</option>
         </select>
 
-        <label>Department</label>
+        <label className="form-label">Department</label>
         <input
+          className="form-input"
           type="text"
           value={accusedDept}
           onChange={(e) => setAccusedDept(e.target.value)}
-          style={{ width: "100%", marginBottom: "10px" }}
         />
 
-        <label>Relationship / Identification Info</label>
+        <label className="form-label">Relationship / Identification Info</label>
         <input
+          className="form-input"
           type="text"
           value={relationship}
           onChange={(e) => setRelationship(e.target.value)}
           placeholder="Senior, classmate, faculty, etc."
-          style={{ width: "100%", marginBottom: "10px" }}
         />
 
-        <label style={{ display: "block", marginBottom: "15px" }}>
+        <div className="checkbox-row">
           <input
             type="checkbox"
             checked={isAnonymous}
             onChange={(e) => setIsAnonymous(e.target.checked)}
           />
-          &nbsp; Submit as Anonymous
-        </label>
+          <span>Submit as Anonymous</span>
+        </div>
 
-        <button type="submit">Submit Incident</button>
+        <button type="submit" className="submit-btn">
+          Submit Incident
+        </button>
       </form>
 
       {referenceId && (
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "15px",
-            border: "2px dashed green",
-          }}
-        >
+        <div className="success-box">
           <h4>Incident Submitted Successfully</h4>
           <p>
             <strong>Reference ID:</strong> {referenceId}

@@ -271,7 +271,7 @@ export default function Home() {
       <section className="cta-section reveal">
         <h2>Your Safety Matters</h2>
         <p>Join Sentra today and help create a safer campus.</p>
-        <button className="btn primary" onClick={() => setShowRole(true)}>
+        <button className="btn primary" onClick={() => {window.scrollTo({top:0, behavior:"smooth"})}}>
           Get Started
         </button>
       </section>

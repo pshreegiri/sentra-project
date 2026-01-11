@@ -357,8 +357,10 @@ body {
 /* ==================== REVIEW INFO ==================== */
 
 .review-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 👈 THIS FIXES IT */
   text-align: left;
-  flex: 1;
 }
 
 .review-info h3 {
@@ -439,7 +441,7 @@ body {
 
 .reviews-section p {
   text-align: center;
-  color: rgba(255, 255, 255, 0.9);
+  color: #020617;
   font-size: 18px;
   position: relative;
   z-index: 1;

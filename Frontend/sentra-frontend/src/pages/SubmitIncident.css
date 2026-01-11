@@ -1,0 +1,147 @@
+/* ==========================================
+   FORM WRAPPER
+   ========================================== */
+.incident-form-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.incident-form {
+  width: 100%;
+  max-width: 650px;
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================
+   FORM TITLE
+   ========================================== */
+.form-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 10px;
+}
+
+/* ==========================================
+   LABELS
+   ========================================== */
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+/* ==========================================
+   INPUTS
+   ========================================== */
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ==========================================
+   SECTION DIVIDER
+   ========================================== */
+.form-divider {
+  margin: 30px 0;
+  border: none;
+  border-top: 2px dashed #e5e7eb;
+}
+
+/* ==========================================
+   SUB SECTION TITLE
+   ========================================== */
+.sub-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+/* ==========================================
+   CHECKBOX
+   ========================================== */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #334155;
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+   ========================================== */
+.submit-btn {
+  width: 100%;
+  margin-top: 30px;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+/* ==========================================
+   SUCCESS BOX
+   ========================================== */
+.success-box {
+  margin-top: 25px;
+  padding: 20px;
+  background: #ecfdf5;
+  border-left: 5px solid #22c55e;
+  border-radius: 14px;
+  color: #14532d;
+}
+
+.success-box h4 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.success-box strong {
+  color: #166534;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+  .incident-form {
+    padding: 25px;
+  }
+}

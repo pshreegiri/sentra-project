@@ -5,7 +5,7 @@
   justify-content: center; /* horizontal center */
   align-items: center;     /* vertical center */
   min-height: 100vh;
-  background: linear-gradient(135deg, #6c63ff, #3f3dff);
+  background: linear-gradient(135deg, #137c8a, #06053a);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 20px;
 }
@@ -26,7 +26,7 @@
 
 /* Left info panel */
 .login-info {
-  background: #6c63ff;
+  background: #0e0c3e;
   color: #fff;
   flex: 1;
   padding: 40px;

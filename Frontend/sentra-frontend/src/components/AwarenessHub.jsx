@@ -26,7 +26,7 @@ function AwarenessHub() {
           <h2>Sentra Awareness Hub</h2>
         </div>
         <div className="navbar-actions">
-          <button onClick={() => navigate("/admin")} className="nav-btn">
+          <button onClick={() => navigate("/")} className="nav-btn">
             Dashboard
           </button>
           <button onClick={handleLogout} className="logout-btn">
