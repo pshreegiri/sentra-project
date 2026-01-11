@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AdminAuthContext } from "../context/AdminAuthContext";
 import "../pages/AwarenessHub.css";
 
 import antiRagging from "../assets/cllg2.jpg";
@@ -5,10 +8,32 @@ import posh from "../assets/cllg3.jpg";
 import conduct from "../assets/cllg1.jpg";
 import discipline from "../assets/cllg4.jpg";
 
-
 function AwarenessHub() {
+  const navigate = useNavigate();
+  const { logout } = useContext(AdminAuthContext);
+
+  const handleLogout = () => {
+    logout();
+    window.location.href = "/";
+  };
+
   return (
     <div className="awareness">
+
+      {/* Navbar */}
+      <nav className="awareness-navbar">
+        <div className="navbar-logo">
+          <h2>Sentra Awareness Hub</h2>
+        </div>
+        <div className="navbar-actions">
+          <button onClick={() => navigate("/admin")} className="nav-btn">
+            Dashboard
+          </button>
+          <button onClick={handleLogout} className="logout-btn">
+            Logout
+          </button>
+        </div>
+      </nav>
 
       {/* Page Header */}
       <section className="awareness-header">
@@ -33,7 +58,7 @@ function AwarenessHub() {
             <ul>
               <li>Physical or psychological harm</li>
               <li>Verbal abuse, teasing, or humiliation</li>
-              <li>Forced participation in activities against one’s will</li>
+              <li>Forced participation in activities against one's will</li>
               <li>Acts violating dignity or self-respect</li>
             </ul>
 
