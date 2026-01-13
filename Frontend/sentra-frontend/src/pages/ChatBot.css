@@ -1,0 +1,125 @@
+/* Floating button */
+.chatbot-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+.chatbot-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Chat window */
+.chatbot-window {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 380px;
+  height: 520px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  overflow: hidden;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Header */
+.chatbot-header {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Body */
+.chatbot-body {
+  flex: 1;
+  padding: 16px;
+  background: #f8fafc;
+  overflow-y: auto;
+}
+
+/* Messages */
+.msg {
+  max-width: 80%;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.msg.user {
+  background: #4f46e5;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+.msg.bot {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-bottom-left-radius: 4px;
+}
+
+/* Footer */
+.chatbot-footer {
+  display: flex;
+  padding: 12px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.chatbot-footer input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+}
+
+.chatbot-footer input:focus {
+  border-color: #6366f1;
+}
+
+.chatbot-footer button {
+  margin-left: 10px;
+  padding: 10px 16px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.chatbot-footer button:hover {
+  background: #4338ca;
+}
+
+/* Scrollbar (nice touch) */
+.chatbot-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatbot-body::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 10px;
+}

@@ -1,0 +1,266 @@
+/* ===============================
+   GLOBAL FIX
+================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+/* ===============================
+   FULL-WIDTH SECTION
+================================ */
+
+.contact-section {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  overflow: hidden;
+
+  background:
+    /* LEFT SHAPE */
+    radial-gradient(
+      circle at 88% 30%,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0.35) 18%,
+      transparent 19%
+    ),
+
+    /* RIGHT SHAPE */
+    radial-gradient(
+      circle at 35% 75%,
+      rgba(236, 210, 255, 0.45) 0%,
+      rgba(236, 210, 255, 0.45) 20%,
+      transparent 21%
+    ),
+
+    /* BASE BACKGROUND */
+    linear-gradient(135deg, #6d7be0, #7b5fc6);
+}
+
+
+/* ===============================
+   SOFT MOVING BACKGROUND SHAPES
+================================ */
+
+.bg-shape {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(50px);        /* 🔽 less blur */
+  opacity: 0.75;             /* 🔼 more visible */
+  z-index: 0;
+}
+
+.shape-1 {
+  background: rgba(255, 255, 255, 0.85); /* visible light shape */
+  top: -120px;
+  left: -120px;
+}
+
+.shape-2 {
+  background: rgba(255, 190, 255, 0.85); /* visible pink shape */
+  bottom: -120px;
+  right: -120px;
+}
+
+/* .bg-shape {
+  filter: blur(0);
+} */
+
+.bg-shape {
+  animation: float 18s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(25px, 25px);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+/* ===============================
+   CENTER CARD
+================================ */
+
+.contact-admin {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 40px 36px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* ===============================
+   HEADING & TEXT
+================================ */
+
+.contact-admin h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.contact-admin .subtitle {
+  text-align: center;
+  font-size: 15px;
+  color: #6b7280;
+  margin-bottom: 30px;
+}
+
+/* ===============================
+   INPUTS
+================================ */
+
+.contact-admin input,
+.contact-admin textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  outline: none;
+  background: #ffffff;
+  color: #111827;
+  transition: all 0.2s ease;
+}
+
+.contact-admin input:focus,
+.contact-admin textarea:focus {
+  border-color: #6d7be0;
+  box-shadow: 0 0 0 4px rgba(109, 123, 224, 0.25);
+}
+
+.contact-admin textarea {
+  resize: none;
+  height: 140px;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+
+.contact-admin button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-admin button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(79, 70, 229, 0.4);
+}
+
+/* ===============================
+   STATUS MESSAGE
+================================ */
+
+.status {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ===============================
+   🌙 DARK MODE – CONTACT SECTION
+================================ */
+
+body.dark-mode .contact-section {
+  background:
+    radial-gradient(
+      circle at 15% 85%,
+      rgba(99, 102, 241, 0.22),
+      rgba(99, 102, 241, 0.1) 32%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(168, 85, 247, 0.22),
+      rgba(168, 85, 247, 0.1) 30%,
+      transparent 50%
+    ),
+    linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+/* ===============================
+   🌙 DARK MODE – CONTACT CARD
+================================ */
+
+body.dark .contact-section {
+  background:
+    /* LEFT SHAPE */
+    radial-gradient(
+      circle at 88% 30%,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.18) 18%,
+      transparent 19%
+    ),
+
+    /* RIGHT SHAPE */
+    radial-gradient(
+      circle at 35% 75%,
+      rgba(168, 85, 247, 0.22) 0%,
+      rgba(168, 85, 247, 0.22) 20%,
+      transparent 21%
+    ),
+
+    /* BASE */
+    linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+
+body.dark .contact-admin {
+  background: #1e293b; /* same family as testimonial cards */
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+}
+
+/* Headings & text */
+body.dark .contact-admin h2 {
+  color: #f9fafb;
+}
+
+body.dark .contact-admin .subtitle {
+  color: #9ca3af;
+}
+
+/* Inputs */
+body.dark .contact-admin input,
+body.dark .contact-admin textarea {
+  background: #020617;
+  color: #f9fafb;
+  border: 1px solid #334155;
+}
+
+body.dark .contact-admin input::placeholder,
+body.dark-mode .contact-admin textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Button */
+body.dark .contact-admin button {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+}

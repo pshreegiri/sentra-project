@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../pages/home.css"
+import Chatbot from "./ChatBot";
+import ContactAdmin from "./ContactAdmin";
 
 export default function Home() {
   const [showRole, setShowRole] = useState(false);
@@ -276,10 +278,13 @@ export default function Home() {
         </button>
       </section>
 
+      <ContactAdmin/>
+
       <footer className="footer">
         <p>© 2026 Sentra System. All Rights Reserved.</p>
         <span>Designed for Educational Institutions</span>
       </footer>
+      <Chatbot/>
     </div>
   );
 }

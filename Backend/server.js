@@ -14,12 +14,14 @@ const incidentRoutes = require("./routes/incidentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const reviewRoutes = require("./routes/reviewRoutes"); // ✅ ADD THIS
+const chatbotRoutes = require("./routes/chatbotRoutes");
 
 // Use routes
 app.use("/api/incidents", incidentRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/reviews", reviewRoutes); // ✅ ADD THIS
+app.use("/api/chatbot", chatbotRoutes);
 
 // MongoDB connection
 mongoose
