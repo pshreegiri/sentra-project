@@ -828,82 +828,101 @@
 }
 
 /* ==========================================
-   RESPONSIVE DESIGN
+   ADMIN DASHBOARD – MOBILE FIXES
    ========================================== */
-@media (max-width: 1200px) {
-  .stats-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 
-@media (max-width: 768px) {
+/* Fix header overflow on small screens */
+@media (max-width: 600px) {
   .admin-dashboard {
-    padding: 15px 20px;
+    padding: 12px;
   }
 
   .admin-header {
-    flex-direction: column;
-    gap: 15px;
-    align-items: flex-start;
+    padding: 15px;
+    gap: 12px;
+    align-items: stretch;
   }
 
   .admin-header h2 {
-    font-size: 22px;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
   }
 
+  /* Buttons container */
+  .admin-header > div {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .admin-header button {
+    flex: 1 1 45%;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .logout-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Stats cards – single column on phones */
+@media (max-width: 500px) {
   .stats-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 15px;
   }
 
+  .stat-card {
+    padding: 20px;
+  }
+
+  .stat-card h3 {
+    font-size: 30px;
+  }
+
+  .stat-card p {
+    font-size: 13px;
+  }
+}
+
+/* Filters full-width */
+@media (max-width: 600px) {
   .filters-container {
-    flex-direction: column;
+    gap: 12px;
   }
 
   .search-box,
   .status-filter {
     width: 100%;
-    min-width: 100%;
-  }
-
-  .incident-table {
-    font-size: 12px;
-  }
-
-  .incident-table thead {
-    display: none;
-  }
-
-  .incident-table tbody tr {
-    display: block;
-    margin-bottom: 15px;
-    border: 1px solid #ecf0f1;
-    border-radius: 8px;
-    padding: 15px;
-  }
-
-  .incident-table tbody td {
-    display: block;
-    text-align: left;
-    padding: 8px 0;
-    border: none;
-  }
-
-  .incident-table tbody td::before {
-    content: attr(data-label);
-    font-weight: 600;
-    margin-right: 10px;
-    color: #7f8c8d;
+    min-width: unset;
   }
 }
 
+/* Table cards spacing fix */
+@media (max-width: 768px) {
+  .incident-table tbody tr {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+}
+
+/* Modal fix on small devices */
 @media (max-width: 480px) {
-  .stats-container {
-    grid-template-columns: 1fr;
+  .modal-box {
+    max-height: 90vh;
+    padding: 18px;
   }
 
-  .modal-box {
-    padding: 20px;
-    width: 95%;
+  .modal-box h3 {
+    font-size: 20px;
+  }
+
+  .submit-resolution-btn,
+  .cancel-btn {
+    font-size: 13px;
+    padding: 10px;
   }
 }
 
