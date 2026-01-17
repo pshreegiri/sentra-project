@@ -57,6 +57,27 @@ const incidentSchema = new mongoose.Schema(
     },
 
     // ======================
+    // 📎 EVIDENCE (CLOUDINARY)
+    // ======================
+    evidence: [
+      {
+        url: {
+          type: String,
+          required: true,
+        },
+        publicId: {
+          type: String,
+          required: true,
+        },
+        type: {
+          type: String,
+          enum: ["image", "pdf"],
+          required: true,
+        },
+      },
+    ],
+
+    // ======================
     // REPORTER (CAN BE ANONYMOUS)
     // ======================
     isAnonymous: {
@@ -84,14 +105,16 @@ const incidentSchema = new mongoose.Schema(
       enum: ["Pending", "In Review", "In Progress", "Closed"],
     },
 
-    // ✅ NEW: Priority Level
+    // ✅ Priority Level
     priority: {
       type: String,
       default: "Medium",
       enum: ["Low", "Medium", "High", "Critical"],
     },
 
-    // ✅ NEW: Comments/Notes by Admin
+    // ======================
+    // ADMIN COMMENTS
+    // ======================
     comments: [
       {
         text: {
@@ -109,7 +132,9 @@ const incidentSchema = new mongoose.Schema(
       },
     ],
 
-    // ✅ NEW: Resolution Notes (when closing)
+    // ======================
+    // RESOLUTION DETAILS
+    // ======================
     resolution: {
       notes: {
         type: String,

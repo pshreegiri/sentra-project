@@ -2,25 +2,27 @@ const express = require("express");
 const router = express.Router();
 
 const incidentController = require("../controllers/incidentController");
-const { verifyToken } = require("../middleware/authMiddleware"); // ✅ Changed
+const { verifyToken } = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
+const upload = require("../middleware/uploadMiddleware"); // ✅ ADDED
 
 // =======================
-// STUDENT ROUTES
+// STUDENT/STAFF ROUTES
 // =======================
 
-// 🔒 Student creates an incident
+// 🔒 Student creates an incident (with file upload)
 router.post(
   "/",
-  verifyToken, // ✅ Changed
+  verifyToken,
   roleMiddleware(["student", "staff"]),
+  upload.array("evidence", 5), // ✅ ADDED
   incidentController.createIncident
 );
 
 // 🔒 Student views own incidents
 router.get(
   "/my",
-  verifyToken, // ✅ Changed
+  verifyToken,
   roleMiddleware(["student", "staff"]),
   incidentController.getMyIncidents
 );
@@ -32,7 +34,7 @@ router.get(
 // 🔒 Admin view all incidents
 router.get(
   "/all",
-  verifyToken, // ✅ Changed
+  verifyToken,
   roleMiddleware(["admin"]),
   incidentController.getAllIncidents
 );
