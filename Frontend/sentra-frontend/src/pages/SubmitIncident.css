@@ -1,14 +1,38 @@
 /* ==========================================
-   FORM WRAPPER
+   HARD OVERRIDE FOR DASHBOARD LAYOUT
+   ========================================== */
+.submit-incident-page {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100%;
+}
+
+/* ==========================================
+   PAGE / WRAPPER
    ========================================== */
 .incident-form-wrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
+  padding: 30px 15px;
+  flex-direction: column;
+  align-items: center;
 }
 
-.incident-form {
+/* Stack form + success vertically */
+.incident-form-layout {
   width: 100%;
   max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* ==========================================
+   FORM CONTAINER
+   ========================================== */
+.incident-form {
+  width: 100%;
   background: white;
   padding: 35px;
   border-radius: 18px;
@@ -61,6 +85,29 @@
 .textarea {
   resize: vertical;
   min-height: 100px;
+}
+
+/* ==========================================
+   FILE UPLOAD
+   ========================================== */
+.file-input {
+  padding: 14px;
+  border: 2px dashed #c7cdd9;
+  background: #f9fafb;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.file-input:hover {
+  border-color: #667eea;
+  background: #f5f7ff;
+}
+
+.file-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #64748b;
 }
 
 /* ==========================================
@@ -117,24 +164,44 @@
 }
 
 /* ==========================================
-   SUCCESS BOX
+   SUCCESS BOX (ALWAYS BELOW FORM)
    ========================================== */
 .success-box {
-  margin-top: 25px;
-  padding: 20px;
+  width: 100%;
+  padding: 20px 22px;
   background: #ecfdf5;
   border-left: 5px solid #22c55e;
   border-radius: 14px;
   color: #14532d;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 .success-box h4 {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-size: 18px;
+  font-weight: 700;
+}
+
+.success-box p {
+  font-size: 14px;
 }
 
 .success-box strong {
   color: #166534;
+}
+
+/* ==========================================
+   ANIMATION
+   ========================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==========================================

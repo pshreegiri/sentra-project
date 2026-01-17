@@ -17,6 +17,7 @@ export default function SubmitIncident() {
   const [accusedDept, setAccusedDept] = useState("");
   const [relationship, setRelationship] = useState("");
 
+  const [files, setFiles] = useState([]);
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [referenceId, setReferenceId] = useState("");
 
@@ -30,34 +31,56 @@ export default function SubmitIncident() {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
+  const handleFileChange = (e) => {
+  const selectedFiles = Array.from(e.target.files);
+
+  const invalidFile = selectedFiles.find(
+    (file) => file.type === "application/pdf"
+  );
+
+  if (invalidFile) {
+    alert("Only image files are allowed as evidence.");
+    e.target.value = "";
+    return;
+  }
+
+  setFiles(selectedFiles);
+};
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      const formData = new FormData();
+
+      formData.append("incidentType", incidentType);
+      formData.append("description", description);
+      formData.append("location", location);
+      formData.append("dateTime", dateTime);
+      formData.append("accusedName", accusedName);
+      formData.append("accusedRole", accusedRole);
+      formData.append("accusedDept", accusedDept);
+      formData.append("relationship", relationship);
+      formData.append("isAnonymous", isAnonymous);
+
+      files.forEach((file) => {
+        formData.append("evidence", file);
+      });
+
       const response = await axios.post(
         "http://localhost:5000/api/incidents",
-        {
-          incidentType,
-          description,
-          location,
-          dateTime,
-          accusedName,
-          accusedRole,
-          accusedDept,
-          relationship,
-          isAnonymous,
-        },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
           },
         }
       );
 
       setReferenceId(response.data.referenceId);
 
-      // reset form
+      // Reset form
       setIncidentType("");
       setDescription("");
       setLocation("");
@@ -67,6 +90,7 @@ export default function SubmitIncident() {
       setAccusedDept("");
       setRelationship("");
       setIsAnonymous(false);
+      setFiles([]);
     } catch (error) {
       console.error(error);
       alert("Error submitting incident");
@@ -162,6 +186,18 @@ export default function SubmitIncident() {
           onChange={(e) => setRelationship(e.target.value)}
           placeholder="Senior, classmate, faculty, etc."
         />
+
+        <label className="form-label">Attach Evidence (Images Only)</label>
+        <input
+          className="form-input file-input"
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+        <small className="file-hint">
+          Upload screenshots, photos (optional).
+        </small>
 
         <div className="checkbox-row">
           <input

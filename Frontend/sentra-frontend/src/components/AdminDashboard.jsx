@@ -319,6 +319,29 @@ export default function AdminDashboard() {
     return <div className="admin-dashboard"><p>Loading...</p></div>;
   }
 
+//   // ✅ Google PDF Viewer helpers
+//   const getGooglePdfUrl = (pdfUrl) => {
+//   // Force Cloudinary to serve PDF inline
+//   let inlineUrl = pdfUrl;
+
+//   if (pdfUrl.includes("/upload/")) {
+//     inlineUrl = pdfUrl.replace(
+//       "/upload/",
+//       "/upload/fl_inline/"
+//     );
+//   }
+
+//   return `https://docs.google.com/gview?url=${encodeURIComponent(
+//     inlineUrl
+//   )}&embedded=true`;
+// };
+
+
+// const handlePDFView = (url) => {
+//   window.open(getGooglePdfUrl(url), "_blank", "noopener,noreferrer");
+// };
+
+
   return (
     <div className="admin-dashboard">
       {/* Header */}
@@ -586,7 +609,237 @@ export default function AdminDashboard() {
               <p className="description-text">{selectedIncident.description}</p>
               
               <hr />
-              
+
+              {/* ========== EVIDENCE SECTION ========== */}
+              <hr />
+              <h4>Evidence</h4>
+              <div className="evidence-section">
+                {selectedIncident.evidence && selectedIncident.evidence.length > 0 ? (
+                  <div className="evidence-grid">
+                    {selectedIncident.evidence.map((item, index) => {
+                      // Extract file extension from URL (handle Cloudinary URLs)
+                      let fileExtension = '';
+                      if (item.url) {
+                        const urlParts = item.url.split('.');
+                        if (urlParts.length > 1) {
+                          // Remove query parameters if present
+                          fileExtension = urlParts[urlParts.length - 1].toLowerCase().split('?')[0];
+                        }
+                      }
+                      
+                      const isImage = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'].includes(fileExtension);
+                      // const isPDF = fileExtension === 'pdf';
+                      const isDocument = ['doc', 'docx', 'txt', 'rtf', 'odt'].includes(fileExtension);
+                      const isVideo = ['mp4', 'avi', 'mov', 'mkv', 'webm', 'wmv'].includes(fileExtension);
+                      const isAudio = ['mp3', 'wav', 'ogg', 'm4a'].includes(fileExtension);
+                      
+                      // Handle PDFs differently - use iframe for Cloudinary PDFs
+                      // const handlePDFView = (url) => {
+                      //   const googleViewerUrl = `https://docs.google.com/gview?url=${encodeURIComponent(
+                      //     url
+                      //   )}&embedded=true`;
+
+                      //   window.open(googleViewerUrl, "_blank", "noopener,noreferrer");
+                      // };
+
+                      return (
+                        <div key={index} className="evidence-item">
+                          <div className="evidence-preview">
+                            {isImage ? (
+                              <div 
+                                className="evidence-image-container"
+                                onClick={() => {
+                                  const newWindow = window.open('', '_blank');
+                                  newWindow.document.write(`
+                                    <html>
+                                      <head>
+                                        <title>${item.originalName || 'Image Evidence'}</title>
+                                        <style>
+                                          body { margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f5f5f5; }
+                                          img { max-width: 90%; max-height: 90vh; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+                                          .controls { position: fixed; top: 10px; right: 10px; z-index: 1000; }
+                                          button { padding: 8px 16px; margin-left: 10px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; }
+                                          button:hover { background: #2980b9; }
+                                        </style>
+                                      </head>
+                                      <body>
+                                        <div class="controls">
+                                          <button onclick="window.location.href='${item.url}'" download="${item.originalName || 'evidence.jpg'}">Download</button>
+                                          <button onclick="window.print()">Print</button>
+                                          <button onclick="window.close()">Close</button>
+                                        </div>
+                                        <img src="${item.url}" alt="${item.originalName || 'Evidence Image'}" />
+                                      </body>
+                                    </html>
+                                  `);
+                                  newWindow.document.close();
+                                }}
+                              >
+                                <img 
+                                  src={item.url} 
+                                  alt={`Evidence ${index + 1}`}
+                                  className="evidence-thumbnail"
+                                />
+                              </div>
+                            ) : isPDF ? (
+                              <div 
+                                className="evidence-pdf"
+                                onClick={() => handlePDFView(item.url)}
+                              >
+                                <div className="pdf-icon">📄</div>
+                                <span>PDF Document</span>
+                              </div>
+                            ) : isVideo ? (
+                              <div className="evidence-video">
+                                <video controls className="video-preview">
+                                  <source src={item.url} type={`video/${fileExtension}`} />
+                                  Your browser does not support the video tag.
+                                </video>
+                              </div>
+                            ) : isAudio ? (
+                              <div className="evidence-audio">
+                                <div className="audio-icon">🎵</div>
+                                <audio controls className="audio-preview">
+                                  <source src={item.url} type={`audio/${fileExtension}`} />
+                                  Your browser does not support the audio tag.
+                                </audio>
+                              </div>
+                            ) : isDocument ? (
+                              <div 
+                                className="evidence-document"
+                                onClick={() => {
+                                  const newWindow = window.open('', '_blank');
+                                  newWindow.document.write(`
+                                    <html>
+                                      <head>
+                                        <title>${item.originalName || 'Document Evidence'}</title>
+                                        <style>
+                                          body { margin: 0; padding: 20px; background: #f5f5f5; }
+                                          .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                                          .controls { margin-bottom: 20px; text-align: right; }
+                                          button { padding: 8px 16px; margin-left: 10px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; }
+                                          button:hover { background: #2980b9; }
+                                          .message { text-align: center; padding: 40px; font-size: 16px; color: #666; }
+                                        </style>
+                                      </head>
+                                      <body>
+                                        <div class="container">
+                                          <div class="controls">
+                                            <button onclick="window.location.href='${item.url}'" download="${item.originalName || 'evidence.' + fileExtension}">Download</button>
+                                            <button onclick="window.close()">Close</button>
+                                          </div>
+                                          <div class="message">
+                                            <h3>${item.originalName || 'Document Evidence'}</h3>
+                                            <p>This document cannot be previewed in the browser.</p>
+                                            <p>Click the "Download" button to view it on your device.</p>
+                                          </div>
+                                        </div>
+                                      </body>
+                                    </html>
+                                  `);
+                                  newWindow.document.close();
+                                }}
+                              >
+                                <div className="doc-icon">📝</div>
+                                <span>{item.originalName || `Document.${fileExtension}`}</span>
+                              </div>
+                            ) : (
+                              <div 
+                                className="evidence-other"
+                                onClick={() => {
+                                  const link = document.createElement('a');
+                                  link.href = item.url;
+                                  link.download = item.originalName || `evidence.${fileExtension}`;
+                                  document.body.appendChild(link);
+                                  link.click();
+                                  document.body.removeChild(link);
+                                }}
+                              >
+                                <div className="file-icon">📎</div>
+                                <span>{item.originalName || `File.${fileExtension}`}</span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="evidence-info">
+                            <p className="evidence-name">
+                              {item.originalName || `Evidence ${index + 1}`}
+                            </p>
+                            {item.uploadedAt && (
+                              <p className="evidence-date">
+                                Uploaded: {new Date(item.uploadedAt).toLocaleDateString()}
+                              </p>
+                            )}
+                            <button 
+                              className="view-btn"
+                              onClick={() => {
+                                if (isImage) {
+                                  const newWindow = window.open('', '_blank');
+                                  newWindow.document.write(`
+                                    <html>
+                                      <head>
+                                        <title>${item.originalName || 'Image Evidence'}</title>
+                                        <style>
+                                          body { margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f5f5f5; }
+                                          img { max-width: 90%; max-height: 90vh; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+                                          .controls { position: fixed; top: 10px; right: 10px; z-index: 1000; }
+                                          button { padding: 8px 16px; margin-left: 10px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; }
+                                          button:hover { background: #2980b9; }
+                                        </style>
+                                      </head>
+                                      <body>
+                                        <div class="controls">
+                                          <button onclick="window.location.href='${item.url}'" download="${item.originalName || 'evidence.jpg'}">Download</button>
+                                          <button onclick="window.print()">Print</button>
+                                          <button onclick="window.close()">Close</button>
+                                        </div>
+                                        <img src="${item.url}" alt="${item.originalName || 'Evidence Image'}" />
+                                      </body>
+                                    </html>
+                                  `);
+                                  newWindow.document.close();
+                                } 
+                                // else if (isPDF) {
+                                //   let downloadUrl = item.url;
+
+                                //   if (item.url.includes("/upload/")) {
+                                //     const safeName = (item.originalName || "evidence.pdf")
+                                //       .replace(/\s+/g, "_")
+                                //       .replace(/[^\w.-]/g, "");
+
+                                //     downloadUrl = item.url.replace(
+                                //       "/upload/",
+                                //       `/upload/fl_attachment:${safeName}/`
+                                //     );
+                                //   }
+
+                                //   window.open(downloadUrl, "_blank");
+                                //   return;
+                                // } 
+                                else {
+                                  // For other files, trigger download
+                                  const link = document.createElement('a');
+                                  link.href = item.url;
+                                  link.download = item.originalName || `evidence.${fileExtension}`;
+                                  document.body.appendChild(link);
+                                  link.click();
+                                  document.body.removeChild(link);
+                                }
+                              }}
+                            >
+                              View/Download
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="no-evidence">No evidence uploaded for this incident.</p>
+                )}
+              </div>
+              {/* ========== END EVIDENCE SECTION ========== */}
+              <hr/>
+
               <h4>Accused Person</h4>
               <div className="detail-grid">
                 <p><strong>Name:</strong> {selectedIncident.accused.name}</p>

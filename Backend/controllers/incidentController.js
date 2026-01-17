@@ -1,5 +1,6 @@
 const Incident = require("../models/Incident");
 const generateReferenceId = require("../utils/generateReferenceId");
+const cloudinary = require("../config/cloudinary");
 
 // ================= CREATE INCIDENT (STUDENT / STAFF) =================
 exports.createIncident = async (req, res) => {
@@ -37,6 +38,44 @@ exports.createIncident = async (req, res) => {
 
     const referenceId = generateReferenceId();
 
+
+    // -----------------------
+    // 📎 UPLOAD EVIDENCE (IMAGES ONLY)
+    // -----------------------
+    const evidenceFiles = [];
+
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+
+        // ❌ BLOCK PDFs COMPLETELY
+        if (file.mimetype === "application/pdf") {
+          return res.status(400).json({
+            success: false,
+            message: "Only image files are allowed as evidence.",
+          });
+        }
+
+        // ✅ UPLOAD IMAGE TO CLOUDINARY
+        const uploadResult = await cloudinary.uploader.upload(
+          `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
+          {
+            folder: "sentra/evidence",
+            resource_type: "image",
+          }
+        );
+
+        evidenceFiles.push({
+          url: uploadResult.secure_url,
+          publicId: uploadResult.public_id,
+          type: "image",
+          originalName: file.originalname,
+        });
+      }
+    }
+
+    // -----------------------
+    // CREATE INCIDENT
+    // -----------------------
     const incident = await Incident.create({
       referenceId,
       incidentType,
@@ -60,6 +99,9 @@ exports.createIncident = async (req, res) => {
         userId: req.user.userId,
         role: req.user.role,
       },
+
+      // 📎 Evidence
+      evidence: evidenceFiles,
     });
 
     res.status(201).json({
