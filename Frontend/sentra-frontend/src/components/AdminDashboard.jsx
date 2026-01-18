@@ -42,7 +42,7 @@ export default function AdminDashboard() {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/admin/incidents",
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents`,
         {
           headers: {
             Authorization: `Bearer ${adminToken}`
@@ -65,7 +65,7 @@ export default function AdminDashboard() {
   const fetchStats = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/incidents/stats",
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents/stats`,
         {
           headers: {
             Authorization: `Bearer ${adminToken}`
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/incidents/${referenceId}/status`,
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents/${referenceId}/status`,
         { status: newStatus },
         {
           headers: {
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
   const handlePriorityChange = async (referenceId, newPriority) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/incidents/${referenceId}/priority`,
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents/${referenceId}/priority`,
         { priority: newPriority },
         {
           headers: {
@@ -145,7 +145,7 @@ export default function AdminDashboard() {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/admin/incidents/${selectedIncident.referenceId}/comments`,
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents/${selectedIncident.referenceId}/comments`,
         { text: newComment },
         {
           headers: {
@@ -171,7 +171,7 @@ export default function AdminDashboard() {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/admin/incidents/${selectedIncident.referenceId}/comments/${commentId}`,
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents/${selectedIncident.referenceId}/comments/${commentId}`,
         {
           headers: {
             Authorization: `Bearer ${adminToken}`
@@ -195,7 +195,7 @@ export default function AdminDashboard() {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/incidents/${incidentToClose}/resolution`,
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents/${incidentToClose}/resolution`,
         { notes: resolutionNotes },
         {
           headers: {
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
       );
 
       await axios.put(
-        `http://localhost:5000/api/admin/incidents/${incidentToClose}/status`,
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents/${incidentToClose}/status`,
         { status: "Closed" },
         {
           headers: {
@@ -239,7 +239,7 @@ export default function AdminDashboard() {
   const handleViewDetails = async (referenceId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/admin/incidents/${referenceId}`,
+        `${import.meta.env.VITE_API_URL}/api/admin/incidents/${referenceId}`,
         {
           headers: {
             Authorization: `Bearer ${adminToken}`
@@ -258,7 +258,7 @@ export default function AdminDashboard() {
     try {
       setReviewsLoading(true);
       const res = await axios.get(
-        "http://localhost:5000/api/reviews/all",
+        `${import.meta.env.VITE_API_URL}/api/reviews/all`,
         { headers: { Authorization: `Bearer ${adminToken}` } }
       );
       setReviews(res.data.reviews);
@@ -272,7 +272,7 @@ export default function AdminDashboard() {
   const handleApproveReview = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/reviews/${id}/approve`,
+        `${import.meta.env.VITE_API_URL}/api/reviews/${id}/approve`,
         {},
         { headers: { Authorization: `Bearer ${adminToken}` } }
       );
@@ -286,7 +286,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Delete this review?")) return;
     try {
       await axios.delete(
-        `http://localhost:5000/api/reviews/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/reviews/${id}`,
         { headers: { Authorization: `Bearer ${adminToken}` } }
       );
       fetchReviews();

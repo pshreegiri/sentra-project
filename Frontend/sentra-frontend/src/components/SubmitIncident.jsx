@@ -69,7 +69,7 @@ export default function SubmitIncident() {
       });
 
       const response = await axios.post(
-        "http://localhost:5000/api/incidents",
+        `${import.meta.env.VITE_API_URL}/api/incidents`,
         formData,
         {
           headers: {

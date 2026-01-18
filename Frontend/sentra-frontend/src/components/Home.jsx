@@ -32,7 +32,7 @@ export default function Home() {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/reviews/approved");
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/reviews/approved`);
       console.log("✅ Approved reviews fetched:", response.data.reviews);
       setReviews(response.data.reviews);
       setLoading(false);

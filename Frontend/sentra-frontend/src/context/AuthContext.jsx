@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   // REGISTER
   // =========================
   const register = async (userData) => {
-    const res = await fetch("http://localhost:5000/api/auth/register", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   // LOGIN (JWT)
   // =========================
   const login = async ({ email, password }) => {
-    const res = await fetch("http://localhost:5000/api/auth/login", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

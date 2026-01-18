@@ -13,7 +13,7 @@ export default function MyIncidents() {
     const fetchMyIncidents = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/incidents/my",
+          `${import.meta.env.VITE_API_URL}/api/incidents/my`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

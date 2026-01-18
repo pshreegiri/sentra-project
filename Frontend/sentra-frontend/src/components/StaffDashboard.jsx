@@ -31,7 +31,7 @@ export default function StaffDashboard() {
     try {
       setSubmitting(true);
       await axios.post(
-        "http://localhost:5000/api/reviews/submit",
+        `${import.meta.env.VITE_API_URL}/api/reviews/submit`,
         { review: reviewText, rating },
         { 
           headers: { 
