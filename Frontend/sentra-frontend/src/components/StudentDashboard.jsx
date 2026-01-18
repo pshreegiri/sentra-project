@@ -3,7 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import SubmitIncident from "./SubmitIncident";
 import MyIncidents from "./MyIncidents";
-import "../pages/StudentDashboard.css";
+import "../pages/studentDashboard.css";
 
 export default function StudentDashboard() {
   const { authUser, logout, token } = useContext(AuthContext);
