@@ -1,28 +1,24 @@
-# SENTRA – Anti-Ragging Reporting & Awareness System
+# SENTRA – Incident Reporting & Response Dashboard for Educational Institutions
 
-Sentra is a web-based anti-ragging platform designed to help students safely report ragging incidents and help institutions take quick action.  
-The system provides awareness, reporting, and monitoring features for students, staff, and administrators.
+Sentra is a web-based platform designed to improve safety and communication within educational institutions. The system allows students and staff to securely report incidents, track the progress of their reports, and access awareness resources related to campus safety.
 
 ---
 
 ## 📌 Project Overview
 
-Ragging is a serious issue in educational institutions. Sentra aims to create a **safe, digital solution** where:
-- Students can report incidents without fear
-- Authorities can monitor and take action
-- Awareness about anti-ragging laws is increased
+Sentra is a web-based platform designed to improve safety and communication within educational institutions. The system enables students and staff to report incidents securely, track their status, and access awareness resources. Administrators can monitor and manage these reports through a dedicated dashboard, ensuring that issues are addressed promptly and transparently. The goal is to promote accountability, reduce hesitation in reporting, and build a culture of trust and safety on campus. 
 
 ---
 
 ## 🚀 Features
 
 - 🔐 User authentication (Student & Staff)
-- 📝 Online ragging complaint reporting
+- 📝 Online complaint reporting
 - 📊 Dashboard for students and staff
 - 🛡 Secure data handling
 - 📱 Responsive design (mobile + desktop)
 - 🤖 Chatbot integration (for help & guidance)
-- 📢 Awareness pages with anti-ragging information
+- 📢 Awareness pages with Campus Policies and information
 
 ---
 
